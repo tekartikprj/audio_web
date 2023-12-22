@@ -4,8 +4,8 @@
 dependencies:
   tekartik_audio_web:
     git:
-      url: git@gitlab.com:tekartik/audio.dart
+      url: https://github.com/tekartikprj/audio_web.dart
+      ref: dart3a
       path: audio_web
-      ref: master
     version: '>=0.1.0'
 ```
