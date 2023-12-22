@@ -1,0 +1,24 @@
+name: tekartik_audio_web_app
+description: Audio test
+version: 0.2.0
+#homepage: https://www.example.com
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  tekartik_test_menu_browser:
+    git:
+      url: https://github.com/tekartik/test_menu.dart
+      path: test_menu_browser
+      ref: dart3a
+    version: '>=0.4.7'
+  tekartik_audio_web:
+    path: ../audio_web
+
+dev_dependencies:
+  process_run:
+  test:
+  build_runner: '>=2.2.0'
+  build_web_compilers: '>=2.16.5'

@@ -1,0 +1,21 @@
+# list of files needed for web deployment
+files:
+  - index.html
+  - test_menu.dart.js
+  - test_menu.js
+  - packages/tekartik_test_menu/css/test_menu_mdl.css
+  - packages/tekartik_mdl_js/js/material.min.js
+  - packages/tekartik_mdl_js/font/material-design-icons/material-icons.css
+  - packages/tekartik_mdl_js/css/material.min.css
+
+TODO:
+  - menu.html
+  - manifest.appcache
+  - manifest.json
+  - index.bootstrap.initialize.dart.js
+  - packages/web_components/webcomponents-lite.min.js
+  - packages/tekartik_tradhiv2016
+  - packages/web_components/interop_support.js
+  - packages/web_components/interop_support.js
+  - packages/polymer_elements/src/paper-menu/paper-menu-shared.css
+  - packages/polymer_elements/src/google-signin/google-signin.css

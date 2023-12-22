@@ -1,2 +1,3 @@
-# audio_web
-Web audio tool
+# audio.dart
+
+Opiniated audio utilities

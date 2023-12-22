@@ -1,0 +1,19 @@
+name: tekartik_audio_web
+description: Audio for the web
+version: 0.2.1
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  path:
+  tekartik_browser_utils:
+    git:
+      url: https://github.com/tekartik/browser_utils.dart
+      ref: dart3a
+      version: '>=0.1.0'
+
+dev_dependencies:
+  test: '>=1.6.0'
+  process_run:
