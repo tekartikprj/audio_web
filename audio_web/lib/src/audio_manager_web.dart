@@ -1,8 +1,8 @@
+import 'dart:html';
 import 'dart:web_audio';
 
 import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:tekartik_audio_web/src/common_utils.dart';
-import 'package:tekartik_browser_utils/browser_utils_import.dart';
 
 import 'import.dart';
 

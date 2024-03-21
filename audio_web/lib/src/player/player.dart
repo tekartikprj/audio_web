@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:web_audio';
 
 import 'package:tekartik_audio_web/audio_web.dart';
@@ -60,6 +61,7 @@ class InstrumentNode {
 
 class Player {
   static DevFlag debug = DevFlag('Player');
+
   // Url to drumkit sound folder (and .json file corresponding)
   String? url;
 

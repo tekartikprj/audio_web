@@ -13,7 +13,7 @@ var audioManager = AudioManagerWeb();
 final audioContext = audioManager.audioContext;
 
 Future main() async {
-  await initTestMenuBrowser(); //js: ['test_menu.js']);
+  await initMenuBrowser(); //js: ['test_menu.js']);
 
   var assetsTop = 'packages/tekartik_audio_web_app/assets';
   menu('main', () {
