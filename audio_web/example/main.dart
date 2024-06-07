@@ -6,5 +6,5 @@ var audioContext = audioManager.audioContext;
 Future main() async {
   var audioSample = AudioSample(audioContext);
   await audioSample.load('my_audio.ogg', true);
-  audioSample.noteOn(audioContext.destination!, audioContext.currentTime);
+  audioSample.noteOn(audioContext.destination, audioContext.currentTime);
 }

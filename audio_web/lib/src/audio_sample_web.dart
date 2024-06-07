@@ -1,14 +1,14 @@
-import 'dart:html';
+import 'dart:js_interop';
 import 'dart:typed_data';
-import 'dart:web_audio';
 
 import 'package:tekartik_browser_utils/browser_utils_import.dart';
+import 'package:web/web.dart' as web;
 
 class AudioSample {
   bool loaded = false;
-  AudioBuffer? buffer;
+  web.AudioBuffer? buffer;
 
-  final AudioContext? _audioContext;
+  final web.AudioContext? _audioContext;
 
   AudioSample(this._audioContext);
 
@@ -23,30 +23,38 @@ class AudioSample {
         return;
       }
       loaded = true;
-      var request = await HttpRequest.request(url, responseType: 'arraybuffer');
+      var request =
+          // ignore: deprecated_member_use
+          await web.HttpRequest.request(url, responseType: 'arraybuffer');
       buffer = await _audioContext!
-          .decodeAudioData(request.response as ByteBuffer); //, mixToMono);
+          .decodeAudioData(request.response as JSArrayBuffer)
+          .toDart; //, mixToMono);
       _readyCompleter.complete();
     });
   }
 
-  AudioBufferSourceNode noteOn(AudioNode destination, num? time) {
+  web.AudioBufferSourceNode noteOn(web.AudioNode destination, num? time) {
     var node = _audioContext!.createBufferSource();
-    node.connectNode(destination);
+    node.connect(destination);
     node.buffer = buffer;
-    node.start(time);
+    if (time != null) {
+      node.start(time);
+    } else {
+      node.start();
+    }
     return node;
   }
 
   /// Simple helper to play a sample
   void play() {
-    noteOn(_audioContext!.destination!, _audioContext!.currentTime);
+    noteOn(_audioContext!.destination, _audioContext.currentTime);
   }
 
   Future loadBytes(Uint8List bytes) async {
     await _loadLock.synchronized(() async {
-      buffer ??=
-          await _audioContext!.decodeAudioData(bytes.buffer); //, mixToMono);
+      buffer ??= (await _audioContext!
+          .decodeAudioData(bytes.buffer.toJS)
+          .toDart); //, mixToMono);
       _readyCompleter.complete();
     });
   }

@@ -1,6 +1,3 @@
-import 'dart:html';
-import 'dart:web_audio';
-
 import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:tekartik_audio_web/src/audio_kit.dart';
 import 'package:tekartik_audio_web/src/instrument.dart';
@@ -8,14 +5,15 @@ import 'package:tekartik_audio_web/src/sequencer/sequencer.dart';
 import 'package:tekartik_audio_web/src/sequencer/sequencer_event.dart';
 import 'package:tekartik_audio_web/src/sequencer/song.dart';
 import 'package:tekartik_browser_utils/browser_utils_import.dart';
+import 'package:web/web.dart' as web;
 
 typedef PlayerCallback = void Function();
 
 /// Single gain and source node for all items in a group
 class GroupedInstrumentNode {
-  AudioBufferSourceNode? source;
+  web.AudioBufferSourceNode? source;
   Player player;
-  late GainNode gain;
+  late web.GainNode gain;
 
   GroupedInstrumentNode(this.player) {
     var ctx = player.audioContext!;
@@ -23,7 +21,7 @@ class GroupedInstrumentNode {
     // Single gain node and source node for all items in the same group
     gain = ctx.createGain();
     var mixNode = player.mixNode!;
-    gain.connectNode(mixNode);
+    gain.connect(mixNode);
   }
 }
 
@@ -40,9 +38,9 @@ class InstrumentNode {
 
   void noteOn(num time, num volume) {
     var ctx = player.audioContext!;
-    var gain = group!.gain.gain!;
+    var gain = group!.gain.gain;
 
-    gain.setValueAtTime(gain.value!, time - faceDuration);
+    gain.setValueAtTime(gain.value, time - faceDuration);
     gain.linearRampToValueAtTime(0, time);
     gain.setValueAtTime(volume, time);
     if (group!.source != null) {
@@ -50,7 +48,7 @@ class InstrumentNode {
     }
     // source.noteOff(time); // + Math.random() / 50);
     group!.source = ctx.createBufferSource();
-    group!.source!.connectNode(group!.gain);
+    group!.source!.connect(group!.gain);
     group!.source!.buffer = sample!.buffer;
     group!.source!.start(time); // + Math.random() / 50);
 //    if (player.logger.debugEnabled) {
@@ -68,13 +66,13 @@ class Player {
   // drumkit json
   String? defUrl;
 
-  AudioContext? audioContext;
+  web.AudioContext? audioContext;
 
   late AudioKit audioKit;
 
-  AudioNode? mixNode;
+  web.AudioNode? mixNode;
 
-  GainNode? gainNode;
+  web.GainNode? gainNode;
 
   late Sequencer _sequencer;
 
@@ -105,11 +103,14 @@ class Player {
     _sequencer.callback = (SequencerEvent e) {
       onSequencerEvent(e);
     };
-
-    window.onFocus.listen((e) {
+    web.EventStreamProviders.focusEvent
+        .forTarget(web.window)
+        .listen((web.Event event) {
       windowHasFocus = true;
     });
-    window.onBlur.listen((e) {
+    web.EventStreamProviders.blurEvent
+        .forTarget(web.window)
+        .listen((web.Event event) {
       windowHasFocus = false;
     });
   }
@@ -122,7 +123,7 @@ class Player {
 
   set volume(num volume) {
     // _sequencer.updateTempo(tempo, getCurrentTime());
-    gainNode!.gain!.value = (volume * volume) / 10000;
+    gainNode!.gain.value = (volume * volume) / 10000;
   }
 
   static final int scheduleDelayMs = 50;
@@ -141,19 +142,19 @@ class Player {
   }
 
   Future init() async {
-    audioContext = AudioContext();
+    audioContext = web.AudioContext();
     if (audioContext != null) {
       // Default
       mixNode = audioContext!.destination;
 
       var compressor = audioContext!.createDynamicsCompressor();
 
-      compressor.connectNode(mixNode!, 0, 0);
+      compressor.connect(mixNode!, 0, 0);
       mixNode = compressor;
 
       gainNode = audioContext!.createGain();
-      gainNode!.gain!.value = 1;
-      gainNode!.connectNode(mixNode!, 0, 0);
+      gainNode!.gain.value = 1;
+      gainNode!.connect(mixNode!, 0, 0);
       mixNode = gainNode;
 
       audioKit = AudioKit();
@@ -184,7 +185,7 @@ class Player {
   }
 
   num _getCurrentTime() {
-    return audioContext!.currentTime! - startTime!;
+    return audioContext!.currentTime - startTime!;
   }
 
   set song(Song song) {

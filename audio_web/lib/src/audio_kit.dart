@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html';
-import 'dart:web_audio';
+
 import 'package:path/path.dart';
-import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:tekartik_audio_web/src/instrument.dart';
+import 'package:web/web.dart' as web;
+
+import 'audio_sample_web.dart';
 
 class AudioKit {
   Map<Instrument, AudioSample> samples = {};
@@ -14,10 +15,12 @@ class AudioKit {
   // Map from each instrument to a group of instrument that cannot be played together (open/closed hit-hat for example)
   Map<Instrument, List<Instrument>> groupMap = {};
 
-  Future loadKit(AudioContext? audioContext, String? defUrl, [String? kitUrl]) {
+  Future loadKit(web.AudioContext? audioContext, String? defUrl,
+      [String? kitUrl]) {
     this.kitUrl = kitUrl ?? url.dirname(defUrl!);
 
-    return HttpRequest.getString('$defUrl').then((String content) {
+    // ignore: deprecated_member_use
+    return web.HttpRequest.getString('$defUrl').then((String content) {
       var result = jsonDecode(content) as Map;
 
       var instruments = result[r'instruments'] as Map;
@@ -42,7 +45,7 @@ class AudioKit {
     });
   }
 
-  Future loadInstruments(AudioContext? audioContext) {
+  Future loadInstruments(web.AudioContext? audioContext) {
     // List<String> instruments = <String> ['bd', 'sn', 'rim', 'chh', 'ohh', 'htom', 'mtom', 'ltom', 'splash', 'ride'];
 
     var futures = <Future>[];

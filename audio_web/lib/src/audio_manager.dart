@@ -1,4 +1,4 @@
-import 'package:tekartik_audio_web/audio_web.dart';
+import 'audio_format.dart';
 
 abstract class AudioManager {
   Set<AudioFormatType> get supportedTypes;

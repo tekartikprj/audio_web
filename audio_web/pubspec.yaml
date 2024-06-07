@@ -4,10 +4,11 @@ version: 0.2.1
 publish_to: none
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.4.0-0 <4.0.0'
 
 dependencies:
   path:
+  web:
   tekartik_browser_utils:
     git:
       url: https://github.com/tekartik/browser_utils.dart

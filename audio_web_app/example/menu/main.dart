@@ -51,7 +51,7 @@ Future main() async {
       item('tac', () async {
         var audioSample = AudioSample(audioContext);
         await audioSample.load('$assetsTop/audio/tac.ogg', true);
-        audioSample.noteOn(audioContext.destination!, audioContext.currentTime);
+        audioSample.noteOn(audioContext.destination, audioContext.currentTime);
       });
 
       item('tac then tic', () async {
@@ -59,9 +59,9 @@ Future main() async {
         var ticAudioSample = AudioSample(audioContext);
         await audioSample.load('$assetsTop/audio/tac.ogg', true);
         await ticAudioSample.load('$assetsTop/audio/tic.ogg', true);
-        audioSample.noteOn(audioContext.destination!, audioContext.currentTime);
+        audioSample.noteOn(audioContext.destination, audioContext.currentTime);
         ticAudioSample.noteOn(
-            audioContext.destination!, audioContext.currentTime! + .2);
+            audioContext.destination, audioContext.currentTime + .2);
       });
     });
 

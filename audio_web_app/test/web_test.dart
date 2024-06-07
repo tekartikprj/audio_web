@@ -13,7 +13,7 @@ void main() {
   test('format', () async {
     var audioSample = AudioSample(audioContext);
     await audioSample.load('$assetsTop/audio/tac.ogg', true);
-    audioSample.noteOn(audioContext.destination!, audioContext.currentTime);
+    audioSample.noteOn(audioContext.destination, audioContext.currentTime);
     await Future<void>.delayed(Duration(seconds: 5));
   });
 }

@@ -1,9 +1,6 @@
-import 'dart:html';
-import 'dart:web_audio';
-
 import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:tekartik_audio_web/src/common_utils.dart';
-
+import 'package:web/web.dart';
 import 'import.dart';
 
 class AudioManagerWeb implements AudioManager {
@@ -17,11 +14,11 @@ class AudioManagerWeb implements AudioManager {
     /// Check for browser support for various codecs and cache the results.
     /// @return {Howler}
 
-    AudioElement audioTest;
+    HTMLAudioElement audioTest;
 
     // Must wrap in a try/catch because IE11 in server mode throws an error.
     try {
-      audioTest = AudioElement();
+      audioTest = HTMLAudioElement();
     } catch (err) {
       print('Audio not supported');
       return;
@@ -65,7 +62,7 @@ class AudioManagerWeb implements AudioManager {
 
   bool testCanPlayRawFormatType(String type) {
     try {
-      var audioTest = AudioElement();
+      var audioTest = HTMLAudioElement();
       return canPlayType(audioTest, type);
     } catch (err) {
       print('Audio not supported');
@@ -75,7 +72,7 @@ class AudioManagerWeb implements AudioManager {
 
   bool testCanPlayFormatType(AudioFormatType type) {
     try {
-      var audioTest = AudioElement();
+      var audioTest = HTMLAudioElement();
 
       return canPlayType(audioTest, audioFormatInformation[type]!.mimeType);
     } catch (err) {
@@ -88,7 +85,7 @@ class AudioManagerWeb implements AudioManager {
 @visibleForTesting
 String canPlayTypeRawResult(String type) {
   try {
-    var audioTest = AudioElement();
+    var audioTest = HTMLAudioElement();
 
     var result = audioTest.canPlayType(type);
     return result;
@@ -98,7 +95,7 @@ String canPlayTypeRawResult(String type) {
   }
 }
 
-bool canPlayType(AudioElement audioTest, String type) {
+bool canPlayType(HTMLAudioElement audioTest, String type) {
   // audio/mp3 probably
   // audio/ogg maybe
   // audio/wav maybe
