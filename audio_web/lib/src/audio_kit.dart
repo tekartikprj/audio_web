@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:http/http.dart';
 import 'package:path/path.dart';
 import 'package:tekartik_audio_web/src/instrument.dart';
 import 'package:web/web.dart' as web;
@@ -15,21 +16,20 @@ class AudioKit {
   // Map from each instrument to a group of instrument that cannot be played together (open/closed hit-hat for example)
   Map<Instrument, List<Instrument>> groupMap = {};
 
-  Future loadKit(web.AudioContext? audioContext, String? defUrl,
-      [String? kitUrl]) {
-    this.kitUrl = kitUrl ?? url.dirname(defUrl!);
+  Future loadKit(web.AudioContext? audioContext, String defUrl,
+      [String? kitUrl]) async {
+    this.kitUrl = kitUrl ?? url.dirname(defUrl);
 
-    // ignore: deprecated_member_use
-    return web.HttpRequest.getString('$defUrl').then((String content) {
-      var result = jsonDecode(content) as Map;
+    var content = await read(Uri.parse(defUrl));
+    var result = jsonDecode(content) as Map;
 
-      var instruments = result[r'instruments'] as Map;
-      instruments.forEach((key, value) {
-        var instrument = Instrument(key?.toString());
-        instrumentUrls[instrument] = value as String;
-      });
+    var instruments = result[r'instruments'] as Map;
+    instruments.forEach((key, value) {
+      var instrument = Instrument(key?.toString());
+      instrumentUrls[instrument] = value as String;
+    });
 
-      /*
+    /*
       groups = result[r'groups'];
 
       groupMap = new Map();
@@ -40,9 +40,8 @@ class AudioKit {
         });
       });
       */
-      // print(groupMap);
-      return loadInstruments(audioContext);
-    });
+    // print(groupMap);
+    return loadInstruments(audioContext);
   }
 
   Future loadInstruments(web.AudioContext? audioContext) {

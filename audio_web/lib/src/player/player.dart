@@ -159,7 +159,8 @@ class Player {
 
       audioKit = AudioKit();
 
-      await audioKit.loadKit(audioContext, defUrl, url);
+      // defUrl must be set at this point!
+      await audioKit.loadKit(audioContext, defUrl!, url);
       // audioKit.loadInstruments(audioContext, () => callback());
     }
   }

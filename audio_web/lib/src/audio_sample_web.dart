@@ -1,6 +1,6 @@
 import 'dart:js_interop';
 import 'dart:typed_data';
-
+import 'package:http/http.dart' as http;
 import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:web/web.dart' as web;
 
@@ -23,12 +23,12 @@ class AudioSample {
         return;
       }
       loaded = true;
-      var request =
-          // ignore: deprecated_member_use
-          await web.HttpRequest.request(url, responseType: 'arraybuffer');
-      buffer = await _audioContext!
-          .decodeAudioData(request.response as JSArrayBuffer)
-          .toDart; //, mixToMono);
+
+      var data = await http.readBytes(Uri.parse(url));
+      var rawData = data.buffer.toJS;
+      buffer =
+          await _audioContext!.decodeAudioData(rawData).toDart; //, mixToMono);
+
       _readyCompleter.complete();
     });
   }
