@@ -1,8 +1,9 @@
 import 'dart:js_interop';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:web/web.dart' as web;
+
+import 'import.dart';
 
 class AudioSample {
   bool loaded = false;

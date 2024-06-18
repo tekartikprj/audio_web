@@ -1,10 +1,10 @@
 import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:tekartik_audio_web/src/audio_kit.dart';
+import 'package:tekartik_audio_web/src/import.dart';
 import 'package:tekartik_audio_web/src/instrument.dart';
 import 'package:tekartik_audio_web/src/sequencer/sequencer.dart';
 import 'package:tekartik_audio_web/src/sequencer/sequencer_event.dart';
 import 'package:tekartik_audio_web/src/sequencer/song.dart';
-import 'package:tekartik_browser_utils/browser_utils_import.dart';
 import 'package:web/web.dart' as web;
 
 typedef PlayerCallback = void Function();
