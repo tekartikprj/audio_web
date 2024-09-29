@@ -1,4 +1,4 @@
-library test_menu;
+library;
 
 import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:tekartik_audio_web/src/audio_kit.dart';

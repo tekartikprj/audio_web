@@ -1,5 +1,5 @@
 @TestOn('browser')
-library web_test;
+library;
 
 import 'package:tekartik_audio_web/audio_web.dart';
 import 'package:test/test.dart';

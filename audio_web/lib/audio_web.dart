@@ -1,7 +1,7 @@
 /// Support for doing something awesome.
 ///
 /// More dartdocs go here.
-library tekartik_audio_web;
+library;
 
 export 'src/audio_format.dart' show AudioFormatType, audioFormatInformation;
 export 'src/audio_manager.dart' show AudioManager;
