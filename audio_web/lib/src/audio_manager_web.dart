@@ -34,7 +34,7 @@ class AudioManagerWeb implements AudioManager {
       checkAndAdd(type);
     }
     // canPlayType(audioTest, 'audio/mpeg;');
-/*
+    /*
     this._codecs = {
       'mp3': (mpegTest || canPlayType(audioTest,'audio/mp3;') ) ,
       'mpeg': mpegTest,

@@ -30,7 +30,8 @@ Future main() async {
     item('can play', () {
       void canPlay(AudioFormatType type) {
         write(
-            '${audioFormatInformation[type]} can play ${audioManager.testCanPlayFormatType(type)}');
+          '${audioFormatInformation[type]} can play ${audioManager.testCanPlayFormatType(type)}',
+        );
       }
 
       canPlay(AudioFormatType.mp3);
@@ -61,7 +62,9 @@ Future main() async {
         await ticAudioSample.load('$assetsTop/audio/tic.ogg', true);
         audioSample.noteOn(audioContext.destination, audioContext.currentTime);
         ticAudioSample.noteOn(
-            audioContext.destination, audioContext.currentTime + .2);
+          audioContext.destination,
+          audioContext.currentTime + .2,
+        );
       });
     });
 
@@ -83,38 +86,41 @@ Future main() async {
         player!.defUrl = '$assetsTop/audio/drumkit.json';
         await player!.init();
         write('player inited');
-        player!.song = Song()
-          ..pattern = (Pattern()
-            ..fromMap({
-              'instruments': ['tic', 'tac'],
-              'steps': [
-                [100, 0],
-                [0, 100]
-              ]
-            }));
+        player!.song =
+            Song()
+              ..pattern =
+                  (Pattern()..fromMap({
+                    'instruments': ['tic', 'tac'],
+                    'steps': [
+                      [100, 0],
+                      [0, 100],
+                    ],
+                  }));
         player!.start();
       });
     });
 
-    Song getTicTacSong() => Song()
-      ..pattern = (Pattern()
-        ..fromMap({
-          'instruments': ['tic', 'tac'],
-          'steps': [
-            [100, 0],
-            [0, 100]
-          ]
-        }));
+    Song getTicTacSong() =>
+        Song()
+          ..pattern =
+              (Pattern()..fromMap({
+                'instruments': ['tic', 'tac'],
+                'steps': [
+                  [100, 0],
+                  [0, 100],
+                ],
+              }));
 
-    Song getTicTacTacSong() => Song()
-      ..pattern = (Pattern()
-        ..fromMap({
-          'instruments': ['tic', 'tac'],
-          'steps': [
-            [100, 0, 0],
-            [0, 100, 100],
-          ]
-        }));
+    Song getTicTacTacSong() =>
+        Song()
+          ..pattern =
+              (Pattern()..fromMap({
+                'instruments': ['tic', 'tac'],
+                'steps': [
+                  [100, 0, 0],
+                  [0, 100, 100],
+                ],
+              }));
 
     menu('player', () {
       // ignore: deprecated_member_use
@@ -172,6 +178,7 @@ Future main() async {
     });
   });
 }
+
 //import '
 /*
 Future main() async {

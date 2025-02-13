@@ -15,5 +15,5 @@ class _AudioFormatInformation implements AudioFormatInformation {
 
 final audioFormatInformation = <AudioFormatType, AudioFormatInformation>{
   AudioFormatType.mp3: _AudioFormatInformation(mimeType: 'audio/mp3'),
-  AudioFormatType.ogg: _AudioFormatInformation(mimeType: 'audio/ogg')
+  AudioFormatType.ogg: _AudioFormatInformation(mimeType: 'audio/ogg'),
 };

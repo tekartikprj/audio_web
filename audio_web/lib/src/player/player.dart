@@ -51,9 +51,9 @@ class InstrumentNode {
     group!.source!.connect(group!.gain);
     group!.source!.buffer = sample!.buffer;
     group!.source!.start(time); // + Math.random() / 50);
-//    if (player.logger.debugEnabled) {
-//      player.logger.debug('${time} ${volume}');
-//    }
+    //    if (player.logger.debugEnabled) {
+    //      player.logger.debug('${time} ${volume}');
+    //    }
   }
 }
 
@@ -103,14 +103,14 @@ class Player {
     _sequencer.callback = (SequencerEvent e) {
       onSequencerEvent(e);
     };
-    web.EventStreamProviders.focusEvent
-        .forTarget(web.window)
-        .listen((web.Event event) {
+    web.EventStreamProviders.focusEvent.forTarget(web.window).listen((
+      web.Event event,
+    ) {
       windowHasFocus = true;
     });
-    web.EventStreamProviders.blurEvent
-        .forTarget(web.window)
-        .listen((web.Event event) {
+    web.EventStreamProviders.blurEvent.forTarget(web.window).listen((
+      web.Event event,
+    ) {
       windowHasFocus = false;
     });
   }
@@ -252,7 +252,8 @@ class Player {
   void playInstrument(Instrument? instrument, num volume, num time) {
     if (Player.debug.on) {
       print(
-          '[player] play $instrument vol ${volume.toStringAsPrecision(1)} at ${time.toStringAsFixed(2)}');
+        '[player] play $instrument vol ${volume.toStringAsPrecision(1)} at ${time.toStringAsFixed(2)}',
+      );
     }
     //Instrument instrument = new Instrument(instrumentName);
     var audioSample = audioKit.samples[instrument!];
@@ -289,7 +290,7 @@ class Player {
     */
   }
 
-/*
+  /*
   void _playSample(AudioSample audioSample, num volume, num time) {
     GainNode noteGainNode = audioContext.createGain();
     noteGainNode.gain.value = volume; // + Math.random() / 10;

@@ -4,7 +4,7 @@ class TempoListRange {
 }
 
 class TempoList {
-/*
+  /*
 TempoList.prototype.initDefault = function() {
   this.addRange(40, 2);
   this.addRange(60, 3);
@@ -25,7 +25,7 @@ TempoList.prototype.initDefault = function() {
     return ranges!.length + 1;
   }
 
-/*
+  /*
 TempoList.prototype.findValueIndex = function(value) {
   this.generateIfNeeded();
   return this.values.indexOf(value);
@@ -86,10 +86,13 @@ TempoList.prototype.generateIfNeeded = function() {
 
     var pos = findInsertionPosition(value);
     ranges!.insert(
-        pos, range); //, element)setRange(start, end, iterable)in(pos, 1);
+      pos,
+      range,
+    ); //, element)setRange(start, end, iterable)in(pos, 1);
     //ranges[pos] = range;
   }
-/*
+
+  /*
 TempoList.prototype.generateValues = function() {
   this.values = [];
   var ranges = this.ranges;

@@ -100,17 +100,20 @@ class Sequencer {
       } else {
         _currentStepIndex = 0;
         _currentLoopIndex++;
-        _timeOffset -= (loopDuration! * _currentLoopIndex) -
+        _timeOffset -=
+            (loopDuration! * _currentLoopIndex) -
             (previousLoopDuration! * (_currentLoopIndex - 1));
         if (debug.on) {
           print(
-              '[sequencer] $loopDuration $_currentLoopIndex ${_timeOffset.toStringAsFixed(2)}');
+            '[sequencer] $loopDuration $_currentLoopIndex ${_timeOffset.toStringAsFixed(2)}',
+          );
         }
       }
 
       if (debug.on) {
         print(
-            '[sequencer] update song $song at ${currentTime.toStringAsFixed(2)} - current ${getCurrentNoteTime().toStringAsFixed(2)}');
+          '[sequencer] update song $song at ${currentTime.toStringAsFixed(2)} - current ${getCurrentNoteTime().toStringAsFixed(2)}',
+        );
       }
     } else {
       this.song = song;
@@ -120,7 +123,8 @@ class Sequencer {
   void updateTempo(num tempo, num currentTime) {
     if (debug.on) {
       print(
-          '[sequencer] update tempo $tempo at ${currentTime.toStringAsFixed(2)}');
+        '[sequencer] update tempo $tempo at ${currentTime.toStringAsFixed(2)}',
+      );
     }
     _tempo = tempo;
     if (playing) {
@@ -134,8 +138,10 @@ class Sequencer {
       num newStepDuration = _song!.getStepDurationWithTempo(_tempo);
       var newLoopDuration = stepCount * newStepDuration;
 
-      var previousNoteTime =
-          getNoteTime(_currentLoopIndex, _currentStepIndex - 1);
+      var previousNoteTime = getNoteTime(
+        _currentLoopIndex,
+        _currentStepIndex - 1,
+      );
       var nextNoteTime = getNoteTime(_currentLoopIndex, _currentStepIndex);
 
       num ratio =
@@ -145,15 +151,19 @@ class Sequencer {
         ratio = 0;
       }
 
-      var currentNoteTime =
-          getNoteTime(_currentLoopIndex, _currentStepIndex - 1 + ratio);
+      var currentNoteTime = getNoteTime(
+        _currentLoopIndex,
+        _currentStepIndex - 1 + ratio,
+      );
       // var currentNoteTime = getCurrentNoteTime();
 
       stepDuration = newStepDuration;
       loopDuration = newLoopDuration;
 
-      var updatedNoteTime =
-          getNoteTime(_currentLoopIndex, _currentStepIndex - 1 + ratio);
+      var updatedNoteTime = getNoteTime(
+        _currentLoopIndex,
+        _currentStepIndex - 1 + ratio,
+      );
       // var updatedNoteTime = this.getCurrentNoteTime();
 
       // Calcul the diff between now and before
@@ -241,7 +251,8 @@ class Sequencer {
         noteTime = getCurrentNoteTime();
         if (Sequencer.debug.on) {
           print(
-              '[sequencer] ${startTime.toStringAsPrecision(2)} < ${noteTime.toStringAsPrecision(2)} < ${endTime!.toStringAsPrecision(2)}');
+            '[sequencer] ${startTime.toStringAsPrecision(2)} < ${noteTime.toStringAsPrecision(2)} < ${endTime!.toStringAsPrecision(2)}',
+          );
         }
 
         if (noteTime >= endTime!) {

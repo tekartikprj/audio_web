@@ -10,7 +10,7 @@ class Song {
     return pattern!.stepCount;
   }
 
-//Assume beat is a sixteenth
+  //Assume beat is a sixteenth
   // duration in seconds
   @Deprecated('Use getStepDurationWithTempo')
   double getBeatDurationWithTempo(num bpm) => getStepDurationWithTempo(bpm);

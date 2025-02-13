@@ -146,9 +146,11 @@ class Pattern {
     if (_steps != null) {
       if ((instruments!.isNotEmpty) && (_stepCount != _steps![0].length)) {
         var newSteps = StepsGroup();
-        for (var instrument = 0;
-            instrument < instruments!.length;
-            instrument++) {
+        for (
+          var instrument = 0;
+          instrument < instruments!.length;
+          instrument++
+        ) {
           var instrumentSteps = Steps();
           newSteps.add(instrumentSteps);
           for (var i = 0; i < _stepCount!; i++) {

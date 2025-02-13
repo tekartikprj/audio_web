@@ -14,7 +14,7 @@ void main() {
       ..instruments = [bassDrumInstrument, snareDrumInstrument]
       ..steps = StepsGroup.fromList([
         [100, 0, 0, 0],
-        [0, 0, 10, 0]
+        [0, 0, 10, 0],
       ])
       ..beatStepCount = 2;
   }
@@ -286,8 +286,9 @@ void main() {
       for (var i = 0; i < 50; i++) {
         sequencer.scheduleOneStep();
         sequencer.updateSong(
-            threeStepsOn ? getTicTacSong() : getTicTacTacSong(),
-            sequencer.getCurrentNoteTime());
+          threeStepsOn ? getTicTacSong() : getTicTacTacSong(),
+          sequencer.getCurrentNoteTime(),
+        );
         threeStepsOn = !threeStepsOn;
       }
     });

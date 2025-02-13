@@ -16,8 +16,11 @@ class AudioKit {
   // Map from each instrument to a group of instrument that cannot be played together (open/closed hit-hat for example)
   Map<Instrument, List<Instrument>> groupMap = {};
 
-  Future loadKit(web.AudioContext? audioContext, String defUrl,
-      [String? kitUrl]) async {
+  Future loadKit(
+    web.AudioContext? audioContext,
+    String defUrl, [
+    String? kitUrl,
+  ]) async {
     this.kitUrl = kitUrl ?? url.dirname(defUrl);
 
     var content = await read(Uri.parse(defUrl));

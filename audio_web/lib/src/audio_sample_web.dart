@@ -53,9 +53,10 @@ class AudioSample {
 
   Future loadBytes(Uint8List bytes) async {
     await _loadLock.synchronized(() async {
-      buffer ??= (await _audioContext!
-          .decodeAudioData(bytes.buffer.toJS)
-          .toDart); //, mixToMono);
+      buffer ??=
+          (await _audioContext!
+              .decodeAudioData(bytes.buffer.toJS)
+              .toDart); //, mixToMono);
       _readyCompleter.complete();
     });
   }
