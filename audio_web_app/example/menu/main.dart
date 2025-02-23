@@ -7,26 +7,15 @@ import 'package:tekartik_audio_web/src/player/player.dart';
 import 'package:tekartik_audio_web/src/sequencer/pattern.dart';
 import 'package:tekartik_audio_web/src/sequencer/sequencer.dart';
 import 'package:tekartik_audio_web/src/sequencer/song.dart';
-import 'package:tekartik_test_menu_browser/test_menu_mdl_browser.dart';
+import 'package:tekartik_test_menu_browser/test_menu_web.dart';
 
 var audioManager = AudioManagerWeb();
 final audioContext = audioManager.audioContext;
 
 Future main() async {
-  await initMenuBrowser(); //js: ['test_menu.js']);
+  await mainMenuWeb(() {
+    var assetsTop = 'packages/tekartik_audio_web_app/assets';
 
-  var assetsTop = 'packages/tekartik_audio_web_app/assets';
-  menu('main', () {
-    item('write hola', () async {
-      write('Hola');
-      //write('RESULT prompt: ${await prompt()}');
-    });
-    item('prompt', () async {
-      write('RESULT prompt: ${await prompt('Some text please then [ENTER]')}');
-    });
-    item('print hi', () {
-      print('hi');
-    });
     item('can play', () {
       void canPlay(AudioFormatType type) {
         write(

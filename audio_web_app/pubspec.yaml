@@ -15,10 +15,14 @@ dependencies:
       ref: dart3a
     version: '>=0.4.7'
   tekartik_audio_web:
-    path: ../audio_web
+    git:
+      url: https://github.com/tekartikprj/audio_web
+      ref: dart3a
+      path: audio_web'
 
 dev_dependencies:
   process_run: ">=1.2.1+1"
   test: ">=1.24.0"
   build_runner: ">=2.4.13"
   build_web_compilers: ">=4.0.11"
+resolution: workspace

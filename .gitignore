@@ -2,3 +2,5 @@
 .idea/
 *.iml
 .vscode/
+/pubspec.lock
+/.dart_tool/
