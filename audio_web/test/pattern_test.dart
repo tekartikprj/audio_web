@@ -55,26 +55,24 @@ void main() {
 
   group('pattern', () {
     test('beat_one', () {
-      var pattern =
-          (Pattern()
-            ..instruments = [bassDrumInstrument, snareDrumInstrument]
-            ..steps = StepsGroup.fromList([
-              [100, 0],
-              [0, 100],
-            ]));
+      var pattern = (Pattern()
+        ..instruments = [bassDrumInstrument, snareDrumInstrument]
+        ..steps = StepsGroup.fromList([
+          [100, 0],
+          [0, 100],
+        ]));
       expect(pattern.stepCount, 2);
       expect(pattern.beatStepCount, 1);
     });
 
     test('beat_2', () {
-      var pattern =
-          (Pattern()
-            ..instruments = [bassDrumInstrument, snareDrumInstrument]
-            ..steps = StepsGroup.fromList([
-              [100, 0, 0, 0],
-              [0, 0, 100, 0],
-            ])
-            ..beatStepCount = 2);
+      var pattern = (Pattern()
+        ..instruments = [bassDrumInstrument, snareDrumInstrument]
+        ..steps = StepsGroup.fromList([
+          [100, 0, 0, 0],
+          [0, 0, 100, 0],
+        ])
+        ..beatStepCount = 2);
       expect(pattern.stepCount, 4);
       expect(pattern.beatStepCount, 2);
     });

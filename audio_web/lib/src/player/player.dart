@@ -272,8 +272,8 @@ class Player {
             groupInstrumentNodes[instrument] = groupedInstrumentNode;
           }
         }
-        groupedInstrumentNode =
-            groupInstrumentNodes[instrument] ??= GroupedInstrumentNode(this);
+        groupedInstrumentNode = groupInstrumentNodes[instrument] ??=
+            GroupedInstrumentNode(this);
 
         // print(groupedInstrumentNode);
       }

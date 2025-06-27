@@ -75,41 +75,38 @@ Future main() async {
         player!.defUrl = '$assetsTop/audio/drumkit.json';
         await player!.init();
         write('player inited');
-        player!.song =
-            Song()
-              ..pattern =
-                  (Pattern()..fromMap({
-                    'instruments': ['tic', 'tac'],
-                    'steps': [
-                      [100, 0],
-                      [0, 100],
-                    ],
-                  }));
+        player!.song = Song()
+          ..pattern = (Pattern()
+            ..fromMap({
+              'instruments': ['tic', 'tac'],
+              'steps': [
+                [100, 0],
+                [0, 100],
+              ],
+            }));
         player!.start();
       });
     });
 
-    Song getTicTacSong() =>
-        Song()
-          ..pattern =
-              (Pattern()..fromMap({
-                'instruments': ['tic', 'tac'],
-                'steps': [
-                  [100, 0],
-                  [0, 100],
-                ],
-              }));
+    Song getTicTacSong() => Song()
+      ..pattern = (Pattern()
+        ..fromMap({
+          'instruments': ['tic', 'tac'],
+          'steps': [
+            [100, 0],
+            [0, 100],
+          ],
+        }));
 
-    Song getTicTacTacSong() =>
-        Song()
-          ..pattern =
-              (Pattern()..fromMap({
-                'instruments': ['tic', 'tac'],
-                'steps': [
-                  [100, 0, 0],
-                  [0, 100, 100],
-                ],
-              }));
+    Song getTicTacTacSong() => Song()
+      ..pattern = (Pattern()
+        ..fromMap({
+          'instruments': ['tic', 'tac'],
+          'steps': [
+            [100, 0, 0],
+            [0, 100, 100],
+          ],
+        }));
 
     menu('player', () {
       // ignore: deprecated_member_use
