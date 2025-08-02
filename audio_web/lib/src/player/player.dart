@@ -5,6 +5,7 @@ import 'package:tekartik_audio_web/src/instrument.dart';
 import 'package:tekartik_audio_web/src/sequencer/sequencer.dart';
 import 'package:tekartik_audio_web/src/sequencer/sequencer_event.dart';
 import 'package:tekartik_audio_web/src/sequencer/song.dart';
+import 'package:tekartik_common_utils/log_utils.dart';
 import 'package:web/web.dart' as web;
 
 typedef PlayerCallback = void Function();
