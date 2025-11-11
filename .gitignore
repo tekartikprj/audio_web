@@ -4,3 +4,6 @@
 .vscode/
 /pubspec.lock
 /.dart_tool/
+.*
+!.gitignore
+!/.github/
