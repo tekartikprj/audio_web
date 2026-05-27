@@ -6,6 +6,11 @@ import 'package:tekartik_audio_web/src/sequencer/song.dart';
 
 typedef SequencerCallback = void Function(SequencerEvent event);
 
+void _log(Object? message) {
+  // ignore: avoid_print
+  print(message);
+}
+
 // Seconds
 num beatDuration(num bpm) {
   return 60.0 / bpm;
@@ -104,14 +109,14 @@ class Sequencer {
             (loopDuration! * _currentLoopIndex) -
             (previousLoopDuration! * (_currentLoopIndex - 1));
         if (debug.on) {
-          print(
+          _log(
             '[sequencer] $loopDuration $_currentLoopIndex ${_timeOffset.toStringAsFixed(2)}',
           );
         }
       }
 
       if (debug.on) {
-        print(
+        _log(
           '[sequencer] update song $song at ${currentTime.toStringAsFixed(2)} - current ${getCurrentNoteTime().toStringAsFixed(2)}',
         );
       }
@@ -122,7 +127,7 @@ class Sequencer {
 
   void updateTempo(num tempo, num currentTime) {
     if (debug.on) {
-      print(
+      _log(
         '[sequencer] update tempo $tempo at ${currentTime.toStringAsFixed(2)}',
       );
     }
@@ -218,7 +223,7 @@ class Sequencer {
           callback!(event);
         }
         if (debug.on) {
-          print('[sequencer] $event');
+          _log('[sequencer] $event');
         }
         // print(event);
 
@@ -250,6 +255,7 @@ class Sequencer {
       while (!_done) {
         noteTime = getCurrentNoteTime();
         if (Sequencer.debug.on) {
+          // ignore: avoid_print
           print(
             '[sequencer] ${startTime.toStringAsPrecision(2)} < ${noteTime.toStringAsPrecision(2)} < ${endTime!.toStringAsPrecision(2)}',
           );

@@ -233,6 +233,7 @@ class Pattern {
     if (stepsDef == null) {
       // compat
       if (map['beats'] != null) {
+        // ignore: avoid_print
         print('WARNING OLD PATTERN FORMAT');
         stepsDef = map['beats'] as List?;
       }

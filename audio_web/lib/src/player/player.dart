@@ -199,6 +199,7 @@ class Player {
 
     // Handle inactive tab with poor refresh
     if (currentTime > nextScheduleTime!) {
+      // ignore: avoid_print
       print('Sequencer timer called too late - TODO handle tab switching');
 
       if (!windowHasFocus) {
@@ -252,6 +253,7 @@ class Player {
 
   void playInstrument(Instrument? instrument, num volume, num time) {
     if (Player.debug.on) {
+      // ignore: avoid_print
       print(
         '[player] play $instrument vol ${volume.toStringAsPrecision(1)} at ${time.toStringAsFixed(2)}',
       );

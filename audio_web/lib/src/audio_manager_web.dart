@@ -20,6 +20,7 @@ class AudioManagerWeb implements AudioManager {
     try {
       audioTest = HTMLAudioElement();
     } catch (err) {
+      // ignore: avoid_print
       print('Audio not supported');
       return;
     }
@@ -65,6 +66,7 @@ class AudioManagerWeb implements AudioManager {
       var audioTest = HTMLAudioElement();
       return canPlayType(audioTest, type);
     } catch (err) {
+      // ignore: avoid_print
       print('Audio not supported');
     }
     return false;
@@ -76,6 +78,7 @@ class AudioManagerWeb implements AudioManager {
 
       return canPlayType(audioTest, audioFormatInformation[type]!.mimeType);
     } catch (err) {
+      // ignore: avoid_print
       print('Audio not supported');
     }
     return false;
@@ -90,6 +93,7 @@ String canPlayTypeRawResult(String type) {
     var result = audioTest.canPlayType(type);
     return result;
   } catch (err) {
+    // ignore: avoid_print
     print('Audio not supported');
     rethrow;
   }
@@ -105,6 +109,7 @@ bool canPlayType(HTMLAudioElement audioTest, String type) {
     return canPlayTypeResultCheck(canPlayTypeResult);
   } catch (e) {
     if (isDebug) {
+      // ignore: avoid_print
       print('canPlayType($type) error $e');
     }
     return false;

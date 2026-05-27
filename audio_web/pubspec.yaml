@@ -19,6 +19,6 @@ dependencies:
       url: https://github.com/tekartik/common_utils.dart
 
 dev_dependencies:
-  test: ">=1.26.3"
+  test: ">=1.31.0"
   process_run: ">=1.2.4"
 resolution: workspace
