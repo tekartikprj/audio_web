@@ -81,216 +81,120 @@ void main() {
     });
 
     test('update_song_1', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(0.0));
-      sequencer.updateSong(getTicTacTacSong(), 0.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(1.0));
-      expect(lastEvent.instrument!.name, 'tac');
-      sequencer.updateSong(getTicTacSong(), 1.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(0.0));
-      expect(lastEvent.instrument!.name, 'tic');
-      /*
-      sequencer.updateSong(getTicTacTacSong(), 1.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(2));
-      */
+      var tester = _UpdateSongTester(getTicTacSong());
+      tester.sequencer.scheduleOneStep();
+      expect(tester.lastEvent!.time, 0.0);
+      tester.expectNextAfterUpdate(getTicTacTacSong(), 0.5, 1.0, 'tac');
+      // Past the end of the 2 steps song, its next loop starts at 2
+      tester.expectNextAfterUpdate(getTicTacSong(), 1.5, 2.0, 'tic');
     });
 
     test('update_song_2', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleOneStep();
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(1.0));
-      sequencer.updateSong(getTicTacTacSong(), 1.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(2.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      var tester = _UpdateSongTester(getTicTacSong(), steps: 2);
+      expect(tester.lastEvent!.time, 1.0);
+      tester.expectNextAfterUpdate(getTicTacTacSong(), 1.5, 2.0, 'tic');
     });
 
     test('update_song_3', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(4);
-      sequencer.updateSong(getTicTacTacSong(), 3.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(4.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      _UpdateSongTester(
+        getTicTacSong(),
+        steps: 4,
+      ).expectNextAfterUpdate(getTicTacTacSong(), 3.5, 4.0, 'tic');
     });
 
     test('update_song_4', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(5);
-      sequencer.updateSong(getTicTacTacSong(), 4.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(5.0));
-      expect(lastEvent.instrument!.name, 'tac');
+      _UpdateSongTester(
+        getTicTacSong(),
+        steps: 5,
+      ).expectNextAfterUpdate(getTicTacTacSong(), 4.5, 5.0, 'tac');
     });
 
     test('update_song_3_to_2_at_3', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(3);
-      sequencer.updateSong(getTicTacSong(), 2.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(3.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      _UpdateSongTester(
+        getTicTacTacSong(),
+        steps: 3,
+      ).expectNextAfterUpdate(getTicTacSong(), 2.5, 3.0, 'tic');
     });
 
     test('update_song_3_to_2_at_2', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(2);
-      sequencer.updateSong(getTicTacSong(), 1.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(0.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      _UpdateSongTester(
+        getTicTacTacSong(),
+        steps: 2,
+      ).expectNextAfterUpdate(getTicTacSong(), 1.5, 2.0, 'tic');
     });
 
     test('update_song_3_to_2_at_5', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(5);
-      sequencer.updateSong(getTicTacSong(), 4.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(3.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      _UpdateSongTester(
+        getTicTacTacSong(),
+        steps: 5,
+      ).expectNextAfterUpdate(getTicTacSong(), 4.5, 5.0, 'tic');
     });
 
     test('update_song_3_to_2_at_6', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(6);
-      sequencer.updateSong(getTicTacSong(), 5.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(6.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      _UpdateSongTester(
+        getTicTacTacSong(),
+        steps: 6,
+      ).expectNextAfterUpdate(getTicTacSong(), 5.5, 6.0, 'tic');
     });
 
     test('update_song_3_to_2_at_32', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      late NoteOnEvent lastEvent;
-      var song = getTicTacTacSong();
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.callback = (SequencerEvent event) {
-        lastEvent = event as NoteOnEvent;
-      };
-      sequencer.start();
-      sequencer.scheduleNSteps(32);
-      sequencer.updateSong(getTicTacSong(), 5.5);
-      sequencer.scheduleOneStep();
-      expect(lastEvent.time, equals(30.0));
-      expect(lastEvent.instrument!.name, 'tic');
+      _UpdateSongTester(
+        getTicTacTacSong(),
+        steps: 32,
+      ).expectNextAfterUpdate(getTicTacSong(), 31.5, 32.0, 'tic');
     });
 
     test('update_song_every_step', () {
-      // ignore: deprecated_member_use
-      Sequencer.debug.on = true;
-      var song = getTicTacTacSong();
+      var tester = _UpdateSongTester(getTicTacTacSong());
+      var sequencer = tester.sequencer;
       var threeStepsOn = true;
-      var sequencer = Sequencer();
-      sequencer.updateTempo(60, 0);
-      sequencer.repeat = true;
-      sequencer.song = song;
-      sequencer.start();
-
+      var times = <num>[];
       for (var i = 0; i < 50; i++) {
         sequencer.scheduleOneStep();
+        times.add(tester.lastEvent!.time!);
+        var nextNoteTime = sequencer.getCurrentNoteTime();
         sequencer.updateSong(
           threeStepsOn ? getTicTacSong() : getTicTacTacSong(),
-          sequencer.getCurrentNoteTime(),
+          nextNoteTime,
         );
+        // The next note does not move
+        expect(sequencer.getCurrentNoteTime(), nextNoteTime);
         threeStepsOn = !threeStepsOn;
       }
+      // One note per second, whatever the song
+      expect(times, List.generate(50, (i) => i.toDouble()));
     });
   });
+}
+
+/// A playing sequencer at 60 bpm (one step per second) on [song] with
+/// [steps] steps already scheduled.
+class _UpdateSongTester {
+  final sequencer = Sequencer();
+  NoteOnEvent? lastEvent;
+
+  _UpdateSongTester(Song song, {int steps = 0}) {
+    sequencer.updateTempo(60, 0);
+    sequencer.repeat = true;
+    sequencer.song = song;
+    sequencer.callback = (SequencerEvent event) {
+      lastEvent = event as NoteOnEvent;
+    };
+    sequencer.start();
+    sequencer.scheduleNSteps(steps);
+  }
+
+  /// Switch to [song] at [currentTime], the next note is expected at [time]
+  /// with [instrument].
+  void expectNextAfterUpdate(
+    Song song,
+    num currentTime,
+    num time,
+    String instrument,
+  ) {
+    sequencer.updateSong(song, currentTime);
+    sequencer.scheduleOneStep();
+    expect(lastEvent!.time, time);
+    expect(lastEvent!.instrument!.name, instrument);
+  }
 }

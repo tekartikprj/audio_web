@@ -22,7 +22,8 @@ TempoList.prototype.initDefault = function() {
         return i;
       }
     }
-    return ranges!.length + 1;
+    // After the last range
+    return ranges!.length;
   }
 
   /*

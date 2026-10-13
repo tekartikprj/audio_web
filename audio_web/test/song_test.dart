@@ -46,8 +46,8 @@ void main() {
     test('info', () {
       var song = getSimpleTestSong1();
       //expect(song.beatDuration, equals(0.5));
-      equals(2, song.stepCount);
-      equals(1, song.pattern!.beatStepCount);
+      expect(song.stepCount, 2);
+      expect(song.pattern!.beatStepCount, 1);
       expect(song.getStepDurationWithTempo(30), closeTo(2.0, 0.00001));
       //equals(30, song.tempo);
     });

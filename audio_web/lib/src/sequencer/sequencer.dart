@@ -93,29 +93,20 @@ class Sequencer {
   // Try to set same step in same loop
   void updateSong(Song song, num currentTime) {
     if (playing) {
-      var currentStepIndex = _currentStepIndex;
-      //num currentNoteTime = getCurrentNoteTime();
-      //num previous
-      var previousLoopDuration = loopDuration;
+      // The next note keeps the time it had in the previous song
+      var nextNoteTime = getCurrentNoteTime();
       this.song = song;
-      if (currentStepIndex < stepCount) {
-        // just fix timeOffset
-        _timeOffset -=
-            (loopDuration! - previousLoopDuration!) * _currentLoopIndex;
-      } else {
+      if (_currentStepIndex >= stepCount) {
+        // Past the end of the new song, continue at its next loop
         _currentStepIndex = 0;
         _currentLoopIndex++;
-        _timeOffset -=
-            (loopDuration! * _currentLoopIndex) -
-            (previousLoopDuration! * (_currentLoopIndex - 1));
-        if (debug.on) {
-          _log(
-            '[sequencer] $loopDuration $_currentLoopIndex ${_timeOffset.toStringAsFixed(2)}',
-          );
-        }
       }
+      _timeOffset += nextNoteTime - getCurrentNoteTime();
 
       if (debug.on) {
+        _log(
+          '[sequencer] $loopDuration $_currentLoopIndex ${_timeOffset.toStringAsFixed(2)}',
+        );
         _log(
           '[sequencer] update song $song at ${currentTime.toStringAsFixed(2)} - current ${getCurrentNoteTime().toStringAsFixed(2)}',
         );
