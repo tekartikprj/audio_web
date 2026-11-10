@@ -171,6 +171,9 @@ class Sequencer {
       // this.loopDuration = newLoopDuration;
 
       // console.log((this.getCurrentNoteTime()).toFixed(2));
+    } else if (_song != null) {
+      // Stopped: the next start plays at the new tempo
+      song = _song;
     }
   }
 

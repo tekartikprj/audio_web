@@ -3,9 +3,15 @@ import 'package:tekartik_audio_web/src/common_utils.dart';
 import 'package:web/web.dart';
 import 'import.dart';
 
+/// The audio of a web app: its [audioContext] and the formats the browser
+/// plays ([supportedTypes]). Create one for the app: each instance creates
+/// its own `AudioContext`.
 class AudioManagerWeb implements AudioManager {
+  /// The context shared by the samples, suspended until a user gesture
+  /// (`audioContext.resume()` from a click handler).
   final AudioContext audioContext = AudioContext();
 
+  /// Creates the context and checks the supported formats.
   AudioManagerWeb() {
     init();
   }
@@ -58,9 +64,11 @@ class AudioManagerWeb implements AudioManager {
 
   final _supportedTypes = <AudioFormatType>{};
 
+  /// The formats the browser said it can play, checked at creation.
   @override
   Set<AudioFormatType> get supportedTypes => _supportedTypes;
 
+  /// Whether the browser can play the mime [type] (`audio/wav`).
   bool testCanPlayRawFormatType(String type) {
     try {
       var audioTest = HTMLAudioElement();
@@ -72,6 +80,7 @@ class AudioManagerWeb implements AudioManager {
     return false;
   }
 
+  /// Whether the browser can play [type].
   bool testCanPlayFormatType(AudioFormatType type) {
     try {
       var audioTest = HTMLAudioElement();

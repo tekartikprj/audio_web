@@ -80,6 +80,25 @@ void main() {
       expect(lastEvent.time, equals(1.25));
     });
 
+    test('update_tempo_stopped', () {
+      var sequencer = Sequencer();
+      var times = <num>[];
+      sequencer.callback = (SequencerEvent event) => times.add(event.time!);
+      sequencer.song = getTicTacSong(); // 120 bpm: a step every 0.5 s
+      // Changed while stopped: the next start plays at 60 bpm
+      sequencer.updateTempo(60, 0);
+      expect(sequencer.tempo, 60);
+      sequencer.start();
+      sequencer.scheduleNSteps(3);
+      expect(times, [0, 1, 2]);
+      sequencer.stop();
+      sequencer.updateTempo(120, 0);
+      sequencer.start();
+      times.clear();
+      sequencer.scheduleNSteps(3);
+      expect(times, [0, 0.5, 1]);
+    });
+
     test('update_song_1', () {
       var tester = _UpdateSongTester(getTicTacSong());
       tester.sequencer.scheduleOneStep();

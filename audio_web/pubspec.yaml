@@ -21,4 +21,7 @@ dependencies:
 dev_dependencies:
   test: ">=1.31.0"
   process_run: ">=1.2.4"
+  # run_ci runs the browser tests (test/audio_sample_test.dart) of a package
+  # depending on build_web_compilers only.
+  build_web_compilers: ">=4.4.19"
 resolution: workspace

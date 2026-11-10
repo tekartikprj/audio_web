@@ -18,8 +18,8 @@ decodes and schedules it. Browser only.
 
 ## Guidelines
 
-* The package lives in a private repository and is not on pub.dev; depend on
-  it from git (as the package README shows):
+* The package is not on pub.dev; depend on it from git (public repository
+  tekartikprj/audio_web, package in `audio_web/`):
 
   ```yaml
   dependencies:
@@ -27,7 +27,6 @@ decodes and schedules it. Browser only.
       git:
         url: https://github.com/tekartikprj/audio_web
         path: audio_web
-      version: '>=0.1.0'
   ```
 
 * One public library: `package:tekartik_audio_web/audio_web.dart`. It exports
@@ -48,8 +47,9 @@ decodes and schedules it. Browser only.
 * Create exactly one `AudioManagerWeb()` for the whole app (a top level
   `final audioManager = AudioManagerWeb();` is the idiom used by the package
   example). Its constructor builds the single `AudioContext` and probes codec
-  support; share `audioManager.audioContext` with every sample. Browsers cap
-  the number of audio contexts, so never build one per sound.
+  support; share `audioManager.audioContext` with every sample. Each context holds
+  audio hardware resources (older browsers capped their number), so never
+  build one per sound.
 * Codec support: `audioManager.supportedTypes` is the `Set<AudioFormatType>`
   ({`mp3`, `ogg`}) the browser said it can play, computed at construction.
   `testCanPlayFormatType(AudioFormatType)` and
@@ -66,11 +66,14 @@ decodes and schedules it. Browser only.
   (a generated wav, an asset you read yourself). `await sample.ready` (or
   await the `load` future) before playing; `sample.loaded` and
   `sample.buffer` (a `web.AudioBuffer?`) expose the state.
-* One `AudioSample` per sound file: `load` is guarded by a lock and by the
-  `loaded` flag, so a second `load('other.ogg')` on the same instance
-  silently returns without loading anything. Call `loadBytes` at most once
-  per instance too (the internal ready completer would complete twice and
-  throw a `StateError`).
+* One `AudioSample` per sound file: `load` and `loadBytes` are guarded by a
+  lock and by the `loaded` flag, so once loaded a second `load('other.ogg')`
+  or `loadBytes(...)` on the same instance silently returns without loading
+  anything. `loaded` is set only after a successful decode: a failed `load`
+  (network, 404, undecodable data) throws and can be retried.
+* `loadBytes` decodes a copy of exactly the given bytes: a view
+  (`Uint8List.sublistView`, the bytes of an asset `ByteData`) is fine and
+  your list stays usable (the Web Audio API detaches the buffer it decodes).
 * `noteOn(destination, time)` creates a fresh `AudioBufferSourceNode`,
   connects it to `destination` and starts it: `time` is an `AudioContext`
   clock value in seconds (`audioContext.currentTime` for now,
@@ -191,7 +194,7 @@ Future<AudioSample> sampleFromBytes(
   Uint8List bytes,
 ) async {
   var sample = AudioSample(manager.audioContext);
-  // Once only: loadBytes() must not be called twice on the same sample.
+  // A second loadBytes() on the same sample would do nothing.
   await sample.loadBytes(bytes);
   await sample.ready;
   print('${sample.buffer!.duration}s decoded');
