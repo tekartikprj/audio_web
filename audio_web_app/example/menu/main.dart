@@ -59,8 +59,15 @@ Future main() async {
 
     menu('player_init', () {
       Player? player;
+      // A replaced player keeps playing (its timer keeps scheduling notes):
+      // stop it first.
+      Player newPlayer() {
+        player?.stop();
+        return Player();
+      }
+
       item('init', () async {
-        player = Player();
+        player = newPlayer();
         player!.defUrl = '$assetsTop/audio/drumkit.json';
         await player!.init();
         write('player inited');
@@ -71,7 +78,7 @@ Future main() async {
         player?.stop();
       });
       item('simple', () async {
-        player = Player();
+        player = newPlayer();
         player!.defUrl = '$assetsTop/audio/drumkit.json';
         await player!.init();
         write('player inited');
